@@ -13,13 +13,15 @@ const client = new Client({
     }
 })
 
+const sessionId = Math.random()
+
 client.onConnect = frame => {
-    console.log("Connected ----")
-    client.subscribe('/topic/greetings', res => {
+    console.log("-- Connected --")
+    client.subscribe(`/topic/chatbot/${sessionId}`, res => {
         console.log(`Response: ${res.body}`)
     })
     client.publish({
-        destination: '/app/hello',
+        destination: `/app/chatbot/${sessionId}`,
         body: "Hello World"
     })
 }
